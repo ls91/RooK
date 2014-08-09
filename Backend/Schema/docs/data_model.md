@@ -44,14 +44,44 @@
 |ID             |INT AUTO_INCREMENT|               |Unique ID for each task                                               |
 |TAG            |VARCHAR(20)       |               |A name for the tag                                                    |
 
+## Comments Table
+|Column Name    |Column Type       |Foreign Key    |Comments                                                              |
+| ------------- | ---------------- | ------------- | -------------------------------------------------------------------- |
+|ID             |INT AUTO INCREMENT|               |ID of the comment                                                     |
+|COMMENT        |VARCHAR(1024)     |               |Comment added agaist object                                           |
+
 ## Board-Category Table
+|Column Name    |Column Type       |Foreign Key    |Comments                                                              |
+| ------------- | ---------------- | ------------- | -------------------------------------------------------------------- |
+|BOARD_ID       |INT               |BOARD.ID       |ID of the board                                                       |
+|CATEGORY_ID    |INT               |CATEGORY.ID    |IDs of the categories that can exit for this board                    |
 
 ## Board-User Table
+|Column Name    |Column Type       |Foreign Key    |Comments                                                              |
+| ------------- | ---------------- | ------------- | -------------------------------------------------------------------- |
+|BOARD_ID       |INT               |BOARD.ID       |ID of the board                                                       |
+|USER_ID        |INT               |USER.ID        |IDs of the users that can access the board                            |
 
 ## Category-Card Table
+|Column Name    |Column Type       |Foreign Key    |Comments                                                              |
+| ------------- | ---------------- | ------------- | -------------------------------------------------------------------- |
+|CATEGORY_ID    |INT               |CATEGORY.ID    |ID of the category                                                    |
+|CARD_ID        |INT               |CARD.ID        |ID of the cards that belong in this category                          |
 
 ## Card-Tasks Table
+|Column Name    |Column Type       |Foreign Key    |Comments                                                              |
+| ------------- | ---------------- | ------------- | -------------------------------------------------------------------- |
+|CARD_ID        |INT               |CARD.ID        |ID of the card                                                        |
+|TASK_ID        |INT               |TASKS.ID       |IDs of the tasks that belong to this card                             |
 
 ## Card-Comments Table
+|Column Name    |Column Type       |Foreign Key    |Comments                                                              |
+| ------------- | ---------------- | ------------- | -------------------------------------------------------------------- |
+|CARD_ID        |INT               |CARD.ID        |ID of the card                                                        |
+|COMMENT_ID     |INT               |COMMENTS.ID    |Comments added agaist a card                                          |
 
 ## Card-Tags Table
+|Column Name    |Column Type       |Foreign Key    |Comments                                                              |
+| ------------- | ---------------- | ------------- | -------------------------------------------------------------------- |
+|CARD_ID        |INT               |CARD.ID        |ID of the card                                                        |
+|TAG_ID         |INT               |TAG.ID         |IDs of the tags associated with this card                             |
