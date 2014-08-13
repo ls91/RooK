@@ -1,0 +1,37 @@
+databaseChangeLog:
+    - changeSet:
+        id: 1
+        author: luke
+        changes:
+        - createTable:
+            tableName: users
+            remarks: Stores the users of RooK including name, email and password hash
+            columns:
+                - column:
+                    name: id
+                    type: int
+                    autoincrement: true
+                    remarks: Unique ID for each user
+                    constraints:
+                        primaryKey: true
+                        primaryKeyName: usersPK
+                        nullable: false
+                        unique: true
+                - column:
+                    name: name
+                    type: varchar(255)
+                    remarks: Full Name of the user
+                    constraints:
+                        nullable: false
+                - column:
+                    name: email
+                    type: varchar(255)
+                    remarks: User email address for login
+                    constraints:
+                        nullable: false
+                - column:
+                    name: pwd_hash
+                    type: varchar(1024)
+                    remarks: The users password stored as a hash
+                    constraints:
+                        nullable: false

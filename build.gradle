@@ -1,0 +1,27 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+	liqui
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.5'
+	
+	liqui 'org.liquibase:liquibase-core:3.2.2'
+	liqui 'com.h2database:h2:1.4.180'
+	
+    testCompile 'junit:junit:4.11'
+}
+
+task liquibase(type: JavaExec) {
+    group = "Liquibase"
+    classpath configurations.liqui
+    main = "liquibase.integration.commandline.Main"
+	
+	args "--defaultsFile=./src/main/resources/liquibase.properties"
+    args "update"
+}

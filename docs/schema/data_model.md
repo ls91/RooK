@@ -12,7 +12,6 @@
 |Column Name    |Column Type       |Foreign Key    |Constraints|Default|Comments                                                              |
 | ------------- | ---------------- | ------------- | --------- | ----- | -------------------------------------------------------------------- |
 |ID             |INT AUTO_INCREMENT|               |PRIMARY KEY|       |Unique ID for each board                                              |
-|OWNER          |INT               |USER.ID        |NOT NULL   |       |Identifies the owner of the board                                     |
 |TITLE          |VARCHAR(512)      |               |NOT NULL   |       |The title for the board                                               |
 |DESCRIPTION    |VARCHAR(1024)     |               |           |       |A description for the board                                           |
 
@@ -50,6 +49,12 @@
 |ID             |INT AUTO INCREMENT|               |PRIMARY KEY|       |ID of the comment                                                     |
 |COMMENT        |VARCHAR(1024)     |               |NOT NULL   |       |Comment added agaist object                                           |
 
+## Roles Table
+|Column Name    |Column Type       |Foreign Key    |Constraints|Default|Comments                                                              |
+| ------------- | ---------------- | ------------- | --------- | ----- | -------------------------------------------------------------------- |
+|ID             |INT AUTO INCREMENT|               |PRIMARY KEY|       |ID of the role                                                        |
+|ROLE           |VARCHAR(1024)     |               |NOT NULL   |       |Text version of the role                                              |
+
 ## Board-Category Table
 |Column Name    |Column Type       |Foreign Key    |Constraints|Default|Comments                                                              |
 | ------------- | ---------------- | ------------- | --------- | ----- | -------------------------------------------------------------------- |
@@ -61,6 +66,7 @@
 | ------------- | ---------------- | ------------- | --------- | ----- | -------------------------------------------------------------------- |
 |BOARD_ID       |INT               |BOARD.ID       |NOT NULL   |       |ID of the board                                                       |
 |USER_ID        |INT               |USER.ID        |NOT NULL   |       |IDs of the users that can access the board                            |
+|ROLE_ID        |INT               |ROLES.ID       |NOT NULL   |       |Role the user has against the given board                             |
 
 ## Category-Card Table
 |Column Name    |Column Type       |Foreign Key    |Constraints|Default|Comments                                                              |
@@ -85,3 +91,11 @@
 | ------------- | ---------------- | ------------- | --------- | ----- | -------------------------------------------------------------------- |
 |CARD_ID        |INT               |CARD.ID        |NOT NULL   |       |ID of the card                                                        |
 |TAG_ID         |INT               |TAG.ID         |NOT NULL   |       |IDs of the tags associated with this card                             |
+
+## Constraints on multiple columns
+- CARDS_TAGS on columns CARD_ID, TAG_ID
+- CARD_COMMENTS on columns CARD_ID, COMMENT_ID
+- CARD_TASKS on columns CARD_ID, TASK_ID
+- CATEGORY_CARD on columns CATEGORY_ID, CARD_ID
+- BOARD_USER on columns BOARD_ID, USER_ID, ROLE_ID
+- BOARD_CATEGORY on columns BOARD_ID, CATEGORY_ID
