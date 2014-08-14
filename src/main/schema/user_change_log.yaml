@@ -10,13 +10,11 @@ databaseChangeLog:
                 - column:
                     name: id
                     type: int
-                    autoincrement: true
+                    autoIncrement: true
                     remarks: Unique ID for each user
                     constraints:
                         primaryKey: true
-                        primaryKeyName: usersPK
                         nullable: false
-                        unique: true
                 - column:
                     name: name
                     type: varchar(255)
