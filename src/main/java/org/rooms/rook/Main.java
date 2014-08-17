@@ -17,8 +17,7 @@ public class Main {
 
         List<User> allUsers = userDao.getAll();
         for (User u : allUsers) {
-            System.out.println("LOOPING USER: " + u.getId() + ":" + u.getName()
-                    + ":" + u.getEmail());
+            System.out.println("LOOPING USER: " + u);
         }
 
     }

@@ -16,6 +16,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.5'
 	compile 'org.jdbi:jdbi:2.38.1'
 	compile 'com.h2database:h2:1.4.180'
+	compile 'com.google.guava:guava:17.0'
 	
 	liqui 'com.h2database:h2:1.4.180'
 	liqui 'org.liquibase:liquibase-core:3.2.2'
