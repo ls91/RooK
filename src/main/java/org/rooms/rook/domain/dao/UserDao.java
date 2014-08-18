@@ -8,6 +8,6 @@ import org.rooms.rook.domain.User;
 public interface UserDao {
 
     public Optional<User> findById(int id);
-
     public List<User> getAll();
+    public User persist(User user);
 }

@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.rooms.rook.domain.User;
 import org.skife.jdbi.v2.sqlobject.Bind;
+import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
+import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 
 @RegisterMapper(UserMapper.class)
@@ -15,6 +17,10 @@ public interface UserDaoJdbi {
 
     @SqlQuery("SELECT id, name, email, pwd_hash FROM users")
     public List<User> getAll();
+    
+    @SqlUpdate("INSERT INTO users (name, email, pwd_hash) VALUES (:name, :email, :pwdHash)")
+    @GetGeneratedKeys
+    public long persist(@Bind("name") String name, @Bind("email") String email, @Bind("pwdHash") String pwdHash);
 
     public void close();
 

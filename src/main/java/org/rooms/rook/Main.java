@@ -11,9 +11,11 @@ public class Main {
     public static void main(String[] args) {
 
         UserDao userDao = new UserDaoJdbiImpl();
-
-        User user = userDao.findById(1).get();
-        System.err.println("USER: " + user.getName());
+        
+        User tom = new User("Tom", "tomew88@gmail.com", "adfasdfasdfa");
+        System.out.println(tom);
+        
+        System.out.println(userDao.persist(tom));
 
         List<User> allUsers = userDao.getAll();
         for (User u : allUsers) {
