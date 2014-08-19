@@ -21,6 +21,10 @@ public interface UserDaoJdbi {
     @SqlUpdate("INSERT INTO users (name, email, pwd_hash) VALUES (:name, :email, :pwdHash)")
     @GetGeneratedKeys
     public long persist(@Bind("name") String name, @Bind("email") String email, @Bind("pwdHash") String pwdHash);
+    
+    @SqlUpdate("UPDATE users SET name = :name, email = :email, pwd_hash = :pwdHash WHERE id = :id")
+    @GetGeneratedKeys
+    public long persist(@Bind("id") long id, @Bind("name") String name, @Bind("email") String email, @Bind("pwdHash") String pwdHash);
 
     public void close();
 

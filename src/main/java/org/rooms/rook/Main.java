@@ -14,10 +14,22 @@ public class Main {
         
         User tom = new User("Tom", "tomew88@gmail.com", "adfasdfasdfa");
         System.out.println(tom);
+        tom = userDao.persist(tom);
+        System.out.println(tom);
         
-        System.out.println(userDao.persist(tom));
-
+        System.err.println("\nPRINTING AFTER INSERT");
         List<User> allUsers = userDao.getAll();
+        for (User u : allUsers) {
+            System.out.println("LOOPING USER: " + u);
+        }
+        
+        
+        User updateTom = new User(tom.getId().get(), "Tom UPDATED", "tomew88@gmail.c88888om", "adfasd###############fasdfa");
+        System.out.println(updateTom);
+        System.out.println(userDao.persist(updateTom));
+        
+        System.err.println("\nPRINTING AFTER UPDATE");
+        allUsers = userDao.getAll();
         for (User u : allUsers) {
             System.out.println("LOOPING USER: " + u);
         }

@@ -45,8 +45,6 @@ public class UserDaoJdbiImpl implements UserDao {
     }
     
     @Override
-    // We could do some inspection here:
-    // If the User object has already been persisted (i.e., it has a non-empty id), update, else insert
     public User persist(User user) {
         JdbcConnectionPool ds = JdbcConnectionPool.create("jdbc:h2:~/RooK",
                 "sa", "");
@@ -54,9 +52,14 @@ public class UserDaoJdbiImpl implements UserDao {
         DBI dbi = new DBI(ds);
         UserDaoJdbi dao = dbi.open(UserDaoJdbi.class);
         
-        long userId = dao.persist(user.getName(), user.getEmail(), user.getPwdHash());
+        long userId;
+        if (user.isPersisted()) {
+        	userId = dao.persist(user.getId().get(), user.getName(), user.getEmail(), user.getPwdHash());
+        } else {
+        	userId = dao.persist(user.getName(), user.getEmail(), user.getPwdHash());
+        }
         
-        User persistedUser = new User(userId, user.getName(), user.getEmail(), user.getPwdHash());
+        User persistedUser = new User((userId == 0) ? user.getId().get() : userId, user.getName(), user.getEmail(), user.getPwdHash());
         return persistedUser;
     }
 
