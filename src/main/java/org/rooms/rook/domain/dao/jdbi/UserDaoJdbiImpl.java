@@ -9,45 +9,26 @@ import org.rooms.rook.domain.dao.UserDao;
 import org.skife.jdbi.v2.DBI;
 
 public class UserDaoJdbiImpl implements UserDao {
-
-    // private final DataSource dataSource;
-
+	
     @Override
     public Optional<User> findById(int id) {
-        JdbcConnectionPool ds = JdbcConnectionPool.create("jdbc:h2:~/RooK",
-                "sa", "");
-
+        JdbcConnectionPool ds = JdbcConnectionPool.create("jdbc:h2:~/RooK", "sa", "");
         DBI dbi = new DBI(ds);
         UserDaoJdbi dao = dbi.open(UserDaoJdbi.class);
-
-        User user = dao.findById(id);
-
-        dao.close();
-        ds.dispose();
-
-        return Optional.ofNullable(user);
+        return Optional.ofNullable(dao.findById(id));
     }
 
     @Override
     public List<User> getAll() {
-        JdbcConnectionPool ds = JdbcConnectionPool.create("jdbc:h2:~/RooK",
-                "sa", "");
-
+        JdbcConnectionPool ds = JdbcConnectionPool.create("jdbc:h2:~/RooK", "sa", "");
         DBI dbi = new DBI(ds);
         UserDaoJdbi dao = dbi.open(UserDaoJdbi.class);
-
-        List<User> users = dao.getAll();
-
-        dao.close();
-        ds.dispose();
-
-        return users;
+        return dao.getAll();
     }
     
     @Override
     public User persist(User user) {
-        JdbcConnectionPool ds = JdbcConnectionPool.create("jdbc:h2:~/RooK",
-                "sa", "");
+        JdbcConnectionPool ds = JdbcConnectionPool.create("jdbc:h2:~/RooK", "sa", "");
 
         DBI dbi = new DBI(ds);
         UserDaoJdbi dao = dbi.open(UserDaoJdbi.class);
@@ -59,8 +40,14 @@ public class UserDaoJdbiImpl implements UserDao {
         	userId = dao.persist(user.getName(), user.getEmail(), user.getPwdHash());
         }
         
-        User persistedUser = new User((userId == 0) ? user.getId().get() : userId, user.getName(), user.getEmail(), user.getPwdHash());
-        return persistedUser;
+        return new User((userId == 0) ? user.getId().get() : userId, user.getName(), user.getEmail(), user.getPwdHash());
     }
-
+    
+    @Override
+    public void remove(User user) {
+        JdbcConnectionPool ds = JdbcConnectionPool.create("jdbc:h2:~/RooK", "sa", "");
+        DBI dbi = new DBI(ds);
+        UserDaoJdbi dao = dbi.open(UserDaoJdbi.class);
+        dao.remove(user.getId().get(), user.getName(), user.getEmail(), user.getPwdHash());
+    }
 }

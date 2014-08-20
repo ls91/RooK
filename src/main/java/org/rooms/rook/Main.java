@@ -33,6 +33,12 @@ public class Main {
         for (User u : allUsers) {
             System.out.println("LOOPING USER: " + u);
         }
-
+        
+        System.err.println("\nDELETING TOM");
+        userDao.remove(updateTom);
+        allUsers = userDao.getAll();
+        for (User u : allUsers) {
+            System.out.println("LOOPING USER: " + u);
+        }
     }
 }

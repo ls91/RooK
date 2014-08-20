@@ -25,6 +25,9 @@ public interface UserDaoJdbi {
     @SqlUpdate("UPDATE users SET name = :name, email = :email, pwd_hash = :pwdHash WHERE id = :id")
     @GetGeneratedKeys
     public long persist(@Bind("id") long id, @Bind("name") String name, @Bind("email") String email, @Bind("pwdHash") String pwdHash);
+    
+    @SqlUpdate("DELETE FROM users WHERE id = :id AND name = :name AND email = :email AND pwd_hash = :pwdHash")
+    public void remove(@Bind("id") long id, @Bind("name") String name, @Bind("email") String email, @Bind("pwdHash") String pwdHash);
 
     public void close();
 
