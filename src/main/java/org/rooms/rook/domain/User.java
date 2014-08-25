@@ -11,20 +11,20 @@ public class User {
     private final Optional<Long> id;
     private final String name;
     private final String email;
-    private final String pwdHash;
+    private final String passwordHash;
     
-    public User(final String name, final String email, final String pwdHash) {
+    public User(final String name, final String email, final String passwordHash) {
         this.id = Optional.empty();
         this.name = checkNotNull(name);
         this.email = checkNotNull(email);
-        this.pwdHash = checkNotNull(pwdHash);
+        this.passwordHash = checkNotNull(passwordHash);
     }
 
-    public User(final long id, final String name, final String email, final String pwdHash) {
+    public User(final long id, final String name, final String email, final String passwordHash) {
         this.id = Optional.of(id);
         this.name = checkNotNull(name);
         this.email = checkNotNull(email);
-        this.pwdHash = checkNotNull(pwdHash);
+        this.passwordHash = checkNotNull(passwordHash);
     }
 
     public Optional<Long> getId() {
@@ -39,19 +39,55 @@ public class User {
         return email;
     }
 
-    public String getPwdHash() {
-        return pwdHash;
+    public String getPasswordHash() {
+        return passwordHash;
     }
     
     public boolean isPersisted() {
         return id.isPresent();
     }
     
+    public User setId(long id) {
+        if (isPersisted()) {
+            // If the user has already been assigned an id from the database, return the same instance
+            return this;
+        }
+        else {
+            return new User(id, name, email, passwordHash);
+        }
+    }
+    
+    public User setName(String name) {
+        if (isPersisted()) {
+            return new User(id.get(), name, email, passwordHash);
+        }
+        else {
+            return new User(name, email, passwordHash);
+        }
+    }
+    
+    public User setEmail(String email) {
+        if (isPersisted()) {
+            return new User(id.get(), name, email, passwordHash);
+        }
+        else {
+            return new User(name, email, passwordHash);
+        }
+    }
+    
+    public User setPasswordHash(String passwordHash) {
+        if (isPersisted()) {
+            return new User(id.get(), name, email, passwordHash);
+        }
+        else {
+            return new User(name, email, passwordHash);
+        }
+    }
+    
     @Override
     public String toString() {
-        String id = (isPersisted() ? this.id.get().toString() : "Not persisted");
         return toStringHelper(this)
-                .add("id", id)
+                .add("id", id.toString())
                 .add("name", name)
                 .add("email", email)
                 .toString();

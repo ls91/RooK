@@ -37,18 +37,17 @@ public class UserDaoJdbiImpl implements UserDao {
     
     @Override
     public User persist(User user) {
-        long userId;
         if (user.isPersisted()) {
-        	userId = dao.persist(user.getId().get(), user.getName(), user.getEmail(), user.getPwdHash());
+        	dao.persist(user.getId().get(), user.getName(), user.getEmail(), user.getPasswordHash());
+        	return user;
         } else {
-        	userId = dao.persist(user.getName(), user.getEmail(), user.getPwdHash());
+        	long userId = dao.persist(user.getName(), user.getEmail(), user.getPasswordHash());
+        	return user.setId(userId);
         }
-        
-        return new User((userId == 0) ? user.getId().get() : userId, user.getName(), user.getEmail(), user.getPwdHash());
     }
     
     @Override
     public void remove(User user) {
-        dao.remove(user.getId().get(), user.getName(), user.getEmail(), user.getPwdHash());
+        dao.remove(user.getId().get(), user.getName(), user.getEmail(), user.getPasswordHash());
     }
 }
