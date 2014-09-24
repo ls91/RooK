@@ -1,31 +1,36 @@
 package org.rooms.rook;
 
-import javax.inject.Inject;
+import java.util.EnumSet;
 
-import org.rooms.rook.domain.dao.DataSourceModule;
-import org.rooms.rook.domain.dao.UserDao;
+import javax.servlet.DispatcherType;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.webapp.WebAppContext;
+
+import com.google.inject.servlet.GuiceFilter;
+import com.sun.jersey.spi.container.servlet.ServletContainer;
 
 public class Main {
     
-    private UserDao userDao;
-    
-    @Inject
-    public Main(final UserDao userDao) {
-        this.userDao = userDao;
-    }
-    
-    public UserDao getUserDao() {
-        return userDao;
-    }
-
-    public static void main(String[] args) {
-    	
-    	Injector injector = Guice.createInjector(new MainModule(), new DataSourceModule());
-    	Main main = injector.getInstance(Main.class);
-    	
-    	UserDao userDao = main.getUserDao();
+    public static void main(String[] args) throws Exception {
+        
+//        WebAppContext webAppContext = new WebAppContext("web", "/");
+//        webAppContext.setResourceBase("web");
+//        
+//        Server server = new Server(8080);
+//        server.setHandler(webAppContext);
+//        server.start();
+//        server.join();
+        
+        Server server = new Server(8080);
+        ServletContextHandler root = 
+                new ServletContextHandler(server, "/", ServletContextHandler.SESSIONS);
+        
+        root.addEventListener(new GuiceServletConfigListener());
+        root.addFilter(GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
+        root.addServlet(ServletContainer.class, "/*");
+        
+        server.start();
     }
 }

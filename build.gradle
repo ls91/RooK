@@ -2,36 +2,52 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 
-mainClassName = "org.rooms.rook.Main"
+mainClassName = 'org.rooms.rook.Main'
 
 repositories {
     mavenCentral()
 }
 
 configurations {
-	liqui
+	lb
 }
 
+ext.jettyVersion     = '9.2.3.v20140905'
+ext.jerseyVersion    = '1.18.1'
+ext.liquibaseVersion = '3.2.2'
+ext.guiceVersion     = '3.0'
+
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.5'
-	compile 'org.jdbi:jdbi:2.38.1'
-	compile 'com.h2database:h2:1.4.180'
-	compile 'com.google.guava:guava:17.0'
-	compile 'com.google.inject:guice:3.0'
+
+    compile 'org.slf4j:slf4j-api:1.7.5',
+            'org.jdbi:jdbi:2.38.1',
+            'com.h2database:h2:1.4.180',
+            'com.google.guava:guava:17.0',
+            
+            "com.google.inject:guice:${ guiceVersion }",
+            "com.google.inject.extensions:guice-servlet:${ guiceVersion }",
+            "com.sun.jersey.contribs:jersey-guice:${ jerseyVersion }",
+            
+            "org.eclipse.jetty:jetty-server:${ jettyVersion }",
+            "org.eclipse.jetty:jetty-webapp:${ jettyVersion }",
+            
+            "com.sun.jersey:jersey-core:${ jerseyVersion }",
+            "com.sun.jersey:jersey-server:${ jerseyVersion }",
+            "com.sun.jersey:jersey-servlet:${ jerseyVersion }"
 	
-	liqui 'com.h2database:h2:1.4.180'
-	liqui 'org.liquibase:liquibase-core:3.2.2'
+	lb 'com.h2database:h2:1.4.180',
+	   "org.liquibase:liquibase-core:${ liquibaseVersion }"
 	
-    testCompile 'junit:junit:4.11'
-    testCompile 'org.assertj:assertj-core:1.6.1'
-    testCompile 'org.liquibase:liquibase-core:3.2.2'
+    testCompile 'junit:junit:4.11',
+                'org.assertj:assertj-core:1.6.1',
+                "org.liquibase:liquibase-core:${ liquibaseVersion }"
 }
 
 task liquibase(type: JavaExec) {
     group = "Liquibase"
-    classpath configurations.liqui
-    main = "liquibase.integration.commandline.Main"
+    classpath configurations.lb
+    main = 'liquibase.integration.commandline.Main'
 	
-	args "--defaultsFile=./src/main/resources/liquibase.properties"
-    args "update"
+	args '--defaultsFile=./src/main/resources/liquibase.properties'
+    args 'update'
 }

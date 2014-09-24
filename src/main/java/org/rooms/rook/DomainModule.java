@@ -5,7 +5,7 @@ import org.rooms.rook.domain.dao.jdbi.UserDaoJdbiImpl;
 
 import com.google.inject.AbstractModule;
 
-public class MainModule extends AbstractModule {
+public class DomainModule extends AbstractModule {
 
     @Override
     protected void configure() {
