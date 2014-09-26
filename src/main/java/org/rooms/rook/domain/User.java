@@ -3,9 +3,12 @@ package org.rooms.rook.domain;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import static com.google.common.base.Objects.toStringHelper;
 import static com.google.common.base.Preconditions.*;
 
+@XmlRootElement
 public class User {
 
     private final Optional<Long> id;

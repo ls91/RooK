@@ -23,6 +23,7 @@ dependencies {
             'org.jdbi:jdbi:2.38.1',
             'com.h2database:h2:1.4.180',
             'com.google.guava:guava:17.0',
+            'org.glassfish.jersey.media:jersey-media-json-jackson:2.12',
             
             "com.google.inject:guice:${ guiceVersion }",
             "com.google.inject.extensions:guice-servlet:${ guiceVersion }",
