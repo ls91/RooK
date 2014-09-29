@@ -1,5 +1,6 @@
 package org.rooms.rook.resources;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -27,17 +28,19 @@ public class UserResource {
     }
     
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String helloWorld() {
-        return "Hello, World!";
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllUsers() {
+        List<User> result = userDao.getAll();
+        return Response.ok(result, MediaType.APPLICATION_JSON).build();
     }
     
     @GET
     @Path("/{id}")
-    public Response getUser(@PathParam("id") final int id) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserById(@PathParam("id") final int id) {
         Optional<User> result = userDao.findById(id);
         if (result.isPresent()) {
-            return Response.ok(result.get(), "application/json").build();
+            return Response.ok(result.get(), MediaType.APPLICATION_JSON).build();
         } else {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }

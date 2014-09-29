@@ -20,6 +20,4 @@ public class UserSerializer extends JsonSerializer<User> {
         jgen.writeStringField("passwordHash", value.getPasswordHash());
         jgen.writeEndObject();
     }
-    
-
 }
