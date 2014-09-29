@@ -6,7 +6,6 @@ import javax.servlet.DispatcherType;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.webapp.WebAppContext;
 
 import com.google.inject.servlet.GuiceFilter;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
