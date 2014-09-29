@@ -8,6 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -32,14 +33,13 @@ public class UserResource {
     }
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public User getUser(@PathParam("id") final int id) {
+    public Response getUser(@PathParam("id") final int id) {
         Optional<User> result = userDao.findById(id);
         if (result.isPresent()) {
-            return result.get();
+            return Response.ok(result.get(), "application/json").build();
+        } else {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
-        Response.noContent();
-        return null;
     }
 }

@@ -5,10 +5,13 @@ import java.util.Optional;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import static com.google.common.base.Objects.toStringHelper;
 import static com.google.common.base.Preconditions.*;
 
 @XmlRootElement
+@JsonSerialize(using = UserSerializer.class)
 public class User {
 
     private final Optional<Long> id;
