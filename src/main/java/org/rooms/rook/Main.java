@@ -14,16 +14,8 @@ import com.sun.jersey.spi.container.servlet.ServletContainer;
 public class Main {
     
     public static void main(String[] args) throws Exception {
-        
-//        WebAppContext webAppContext = new WebAppContext("web", "/");
-//        webAppContext.setResourceBase("web");
-//        
-//        Server server = new Server(8080);
-//        server.setHandler(webAppContext);
-//        server.start();
-//        server.join();
-        
-        Server server = new Server(8080);
+
+    	Server server = new Server(8080);
         ServletContextHandler root = 
                 new ServletContextHandler(server, "/", ServletContextHandler.SESSIONS);
         
